@@ -1,14 +1,210 @@
 <!DOCTYPE html>
 <html>
-<title>Ben</title>
+<head>
+  <title>深圳市统一地址编码查询</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+</head>
+<body>
+  <div class="container mt-5">
+    <h2>统一地址查询</h2>
+    <hr>
+    <div class="row">
+      <div class="col-md-2">
+        <!-- <label for="filterType">筛选条件:</label> -->
+        <select id="filterType" class="form-control">
+          
+          <option value="address">地址名称</option>
+		  <option value="longitude">经纬度坐标</option>
+          <option value="code">统一地址编码</option>
+        </select>
+      </div>
+      <div class="col-md-3">
+        <!-- <label for="filterValue">筛选值:</label> -->
+        <input type="text" id="filterValue" class="form-control">
+      </div>
+	  <div class="col-md-4">
+	    <button id="searchBtn" class="btn btn-primary ">查询</button>
+	    <button id="refreshBtn" class="btn btn-secondary">刷新</button>
+	  </div>
+    </div>
+    <div class="row mt-3">
+     
+    </div>
+    <div class="row mt-3">
+      <div class="col-md-12">
+        <table id="resultTable" class="table table-hover table-group-divider">
+          <thead>
+            <tr>
+              <th>经纬度坐标</th>
+              <th>地址名称</th>
+              <th>统一地址编码</th>
+            </tr>
+          </thead>
+          <tbody id="resultBody">
+            <!-- 查询结果将动态填充到这里 -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
 
-  <form>
-经度:<br>
-<input type="text" name="经度">
-<br>
-纬度:<br>
-<input type="text" name="纬度">
-</form>
-  
+  <!-- 模态框 -->
+  <div class="modal fade" id="myModal">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">提示</h5>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        <div class="modal-body">
+          <p id="modalMessage"></p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" data-dismiss="modal">确定</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+  <script>
+    $(document).ready(function() {
+      // 查询按钮点击事件
+      $("#searchBtn").click(function() {
+        var filterType = $("#filterType").val();
+        var filterValue = $("#filterValue").val();
+
+        // 如果筛选值为空，则弹出提示框并返回
+        if (filterValue === "") {
+          $("#modalMessage").text("请输入查询信息");
+          $("#myModal").modal("show");
+          return;
+        }
+
+        // 创建正则表达式进行模糊查询
+        var regex = new RegExp(filterValue, "i");
+
+        // TODO: 在这里根据选择的筛选条件和值进行查询操作，然后将结果动态填充到表格中
+        // 这里只是一个示例，你需要根据实际情况进行修改
+        var results = [
+          {
+          	longitude: "114.02966,22.529141",
+          	address: "广东省深圳市福田区沙头街道金地社区福强路车公庙变电站",
+          	code: "4403040040040200001"
+          }, {
+          	longitude: "113.963729,22.518835",
+          	address: "广东省深圳市市直属地铁街道福田区社区地铁九号线车公庙站",
+          	code: "4403220010030900005"
+          }, {
+          	longitude: "113.97068,22.518671",
+          	address: "广东省深圳市市直属地铁街道福田区社区地铁七号线车公庙站",
+          	code: "4403220010030700010"
+          }, {
+          	longitude: "114.022014,22.53295",
+          	address: "广东省深圳市福田区沙头街道天安社区车公庙泰然七路1号博今商务广场",
+          	code: "4403040040102700001"
+          }, {
+          	longitude: "113.769338,22.701381",
+          	address: "广东省深圳市宝安区福海街道展城社区展城路1号深圳国际会展中心中央廊道深圳国际会展中心中央廊道B9-B102",
+          	code: "4403060020052500031"
+          }, {
+          	longitude: "113.861495,22.584643",
+          	address: "广东省深圳市宝安区西乡街道共乐社区共和工业路19号大视界国际影视文体产业园创客中心410",
+          	code: "4403060010222100009"
+          }, {
+          	longitude: "113.967287,22.538006",
+          	address: "广东省深圳市南山区沙河街道东方社区深南大道9037号世界之窗船屋",
+          	code: "4403050040030100077"
+          }, {
+          	longitude: "113.977516,22.541453",
+          	address: "广东省深圳市南山区沙河街道文昌街社区欢乐谷空调房欢乐谷空调房1",
+          	code: "4403050040090900086"
+          }, {
+          	longitude: "114.02227,22.536994",
+          	address: "广东省深圳市福田区沙头街道天安社区泰然四路66号泰然立城A座",
+          	code: "4403040040100400007"
+          },
+          {
+          	longitude: "114.022504,22.535969",
+          	address: "广东省深圳市福田区沙头街道天安社区泰然四路85号泰然立城B座",
+          	code: "4403040040101500009"
+          },
+          {
+          	longitude: "114.100473,22.545295",
+          	address: "广东省深圳市罗湖区桂园街道老围社区深南东路5018号深圳大剧院",
+          	code: "4403030030040700001"
+          },
+          {
+          	longitude: "114.341402,22.707703",
+          	address: "广东省深圳市坪山区坪山街道新和社区汇德路2号坪山大剧院101",
+          	code: "4403070090040200176"
+          },
+          {
+          	longitude: "114.056127,22.546378",
+          	address: "广东省深圳市福田区莲花街道福中社区福中三路2008号深圳博物馆市民中心A区市民中心地铁站负一层物业区A-8",
+          	code: "4403040080040900003"
+          },
+          {
+          	longitude: "113.97187,22.519434",
+          	address: "广东省深圳市市直属地铁街道福田区社区地铁四号线市民中心站",
+          	code: "4403220010030400034"
+          },
+          {
+          	longitude: "114.056127,22.546378",
+          	address: "广东省深圳市福田区莲花街道福中社区福中三路2008号市民中心A区",
+          	code: "4403040080040900003"
+          },
+          {
+          	longitude: "114.054513,22.54631",
+          	address: "广东省深圳市福田区莲花街道福中社区福中三路2010号市民中心B区",
+          	code: "4403040080040900002"
+          },
+          {
+          	longitude: "114.052904,22.546347",
+          	address: "广东省深圳市福田区莲花街道福中社区福中三路2012号市民中心C区",
+          	code: "4403040080040900001"
+          },
+          {
+          	longitude: "114.064588,22.561101",
+          	address: "广东省深圳市福田区华富街道莲花一村社区皇岗路5001号深业上城（北区）",
+          	code: "4403040060050400001"
+          },
+          {
+          	longitude: "114.063783,22.559589",
+          	address: "广东省深圳市福田区华富街道莲花一村社区深业上城（南区）商业综合楼233",
+          	code: "4403040060050400004"
+          }
+          
+        ];
+
+        var filteredResults = results.filter(function(result) {
+          return regex.test(result[filterType]);
+        });
+
+        if (filteredResults.length === 0) {
+          $("#resultBody").html("<tr><td colspan='3'>无匹配结果</td></tr>");
+        } else {
+          var resultHtml = "";
+          for (var i = 0; i < filteredResults.length; i++) {
+            resultHtml += "<tr>";
+            resultHtml += "<td>" + filteredResults[i].longitude + "</td>";
+            resultHtml += "<td>" + filteredResults[i].address + "</td>";
+            resultHtml += "<td>" + filteredResults[i].code + "</td>";
+            resultHtml += "</tr>";
+          }
+          $("#resultBody").html(resultHtml);
+        }
+      });
+
+      // 刷新按钮点击事件
+      $("#refreshBtn").click(function() {
+        // 清空输入框和查询结果
+        $("#filterValue").val("");
+        $("#resultBody").html("");
+      });
+    });
+  </script>
 </body>
 </html>

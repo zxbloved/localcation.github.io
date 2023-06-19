@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>深圳市统一地址编码查询</title>
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+  <title>深圳市统一地址编码</title>
+  <link rel="stylesheet" href="./css/bootstrap.css">
 </head>
 <body>
   <div class="container mt-5">
@@ -67,8 +67,8 @@
   </div>
 
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+  <script src="js/popper.min.js"></script>
+  <script src="js/bootstrap.js"></script>
   <script>
     $(document).ready(function() {
       // 查询按钮点击事件
@@ -87,7 +87,6 @@
         var regex = new RegExp(filterValue, "i");
 
         // TODO: 在这里根据选择的筛选条件和值进行查询操作，然后将结果动态填充到表格中
-        // 这里只是一个示例，你需要根据实际情况进行修改
         var results = [
           {
           	longitude: "114.02966,22.529141",
